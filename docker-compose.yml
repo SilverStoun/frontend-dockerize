@@ -1,0 +1,25 @@
+version: "3.6"
+services:
+  dev:
+    build:
+      context: .
+      dockerfile: ./.docker/dev/Dockerfile
+    restart: unless-stopped
+    volumes:
+      - "./src:/app"
+      - "/app/node_modules"
+    ports:
+      - 3000:3000
+    command: ["npm", "start"]
+    profiles:
+      - dev
+
+  production:
+    build:
+      context: .
+      dockerfile: ./.docker/production/Dockerfile
+    restart: unless-stopped
+    ports:
+      - 80:4000
+    profiles:
+      - production
